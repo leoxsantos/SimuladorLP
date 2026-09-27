@@ -65,11 +65,11 @@ O atendimento inicia-se com a inserção dos dados bases da solicitação:
 
 *   **Data de início da fruição:** Insira a data exata a partir da qual o servidor pretende iniciar o seu afastamento.
 <br>
-    <img src="assets/Datadefuicao.png" alt="Campo de Data Inicial" width="350">
+    <img src="assets/Datadefruicao.png" alt="Campo de Data Inicial" width="350">
 
 *   **Tempo solicitado:** Insira o tempo que quer se afastar, o sistema permite selecionar no máximo 90 dias.
 <br>
-    <img src="assets/data_inicio.png" alt="Campo de período solicitado" width="350">
+    <img src="assets/mesesedias.png" alt="Campo de período solicitado" width="350">
 
 ### 5.2. Validação de Quinquênio (Opcional)
 Se preferir, poderá também verificar sobre a disponibilidade do seu quinquênio, basta habilitar a opção "Validar limite do quinquênio":
