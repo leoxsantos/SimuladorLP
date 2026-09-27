@@ -908,3 +908,57 @@ input:focus-visible,
 #btn-expandir:hover {
     background-color: #a5cdff;
 }
+
+.btn-ajuda {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    padding: 6px 6px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.65rem;
+    font-weight: 600;
+    background: rgba(24, 68, 91, 0.75);
+    border-bottom: 2px solid rgba(167, 223, 253, 0.4); 
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden; 
+    transition: all 0.3s ease;
+}
+
+.btn-ajuda::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20%;
+    width: 3px;
+    height: 60%;
+    background-color: #a7dffd;
+    border-radius: 0 3px 3px 0;
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.btn-ajuda::after {
+    content: '›';
+    font-size: 0.85rem;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.btn-ajuda:hover {
+    background: rgba(27, 77, 99, 0.9);
+    border-bottom-color: #a7dffd; 
+    color: #a7dffd;
+    box-shadow: 0 6px 15px rgba(167, 223, 253, 0.25);
+    transform: translateY(-2px);
+}
+
+.btn-ajuda:hover::before {
+    transform: scaleY(1); 
+}
+
+.btn-ajuda:hover::after {
+    transform: translateX(3px); 
+}

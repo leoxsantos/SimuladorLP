@@ -58,7 +58,7 @@ BREVE OS LINKS DA EXTENSÃO NAS LOJAS DE ADDONS DOS BROWSERS!
 
 
 ### 5.1. Preenchimento de Dados e Parâmetros de Fruição
-O atendimento inicia-se com a inserção dos dados bases da solicitação:
+O procedimento inicia-se com a inserção dos dados bases da solicitação:
 *   **Nome do(a) servidor(a):** Campo de identificação textual que será incorporado ao cabeçalho do relatório final que pode ser exportado.
 <br>
     <img src="assets/nome.png" alt="Campo de Nome do Servidor" width="350">
@@ -69,7 +69,7 @@ O atendimento inicia-se com a inserção dos dados bases da solicitação:
 
 *   **Tempo solicitado:** Insira o tempo que quer se afastar, o sistema permite selecionar no máximo 90 dias.
 <br>
-    <img src="assets/mesesedias.png" alt="Campo de período solicitado" width="350">
+    <img src="assets/mesesdias.png" alt="Campo de período solicitado" width="350">
 
 ### 5.2. Validação de Quinquênio (Opcional)
 Se preferir, poderá também verificar sobre a disponibilidade do seu quinquênio, basta habilitar a opção "Validar limite do quinquênio":
