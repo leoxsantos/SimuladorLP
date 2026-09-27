@@ -81,8 +81,10 @@ Se preferir, poderá também verificar sobre a disponibilidade do seu quinquêni
 
 ### 5.3. Interpretação do Painel de Resultados
 Após a inserção dos parâmetros, o sistema compila instantaneamente um relatório consolidado. O painel destaca a **data-limite exata para abertura do processo** (sinalizada por um alerta visual de urgência) e reforça o aviso normativo da CGPP sobre a antecedência de 60 dias. Em paralelo, a interface exibe um **resumo cronológico completo** — detalhando o início, término e o retorno estimado com compensação de fins de semana — e, quando acionada, integra a **análise legal do quinquênio**, atestando de forma objetiva a validade ou prescrição do período aquisitivo.
-<br>
-    <img src="assets/resultados.png" alt="Campo de resultados" width="350">
+<p>
+  <img src="assets/resultados.png" alt="Campo de resultados" width="350">
+  <img src="assets/resultados2.png" alt="Campo de resultados" width="350">
+</p>
 
 ### 5.4. Finalização e Integração de Dados
 Para concluir o procedimento, a ferramenta disponibiliza três ações:
