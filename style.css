@@ -198,6 +198,17 @@ body:has(#resultado.vencido) .topo::after {
     color: var(--tinta-suave);
     font-size: 0.85rem;
 }
+.dica.processo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #000000;
+    font-size: 0.70rem;
+    font-weight: 400;
+    background: rgba(230, 180, 34, 0.15); 
+    padding: 6px 12px;
+    border-radius: 6px;
+}
 
 input[type="text"],
 input[type="date"],
