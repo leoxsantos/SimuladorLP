@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simulador de cálculo LP e Pecúnia</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topo no-print">
+    <div class="topo-interno">
+        <h1>Simulador de cálculo de Licença Prêmio/ Pecúnia</h1>
+        <p>Informe a data de início: o sistema calcula o término da fruição e o prazo para abertura do processo</p>
+    </div>
+</header>
+<button id="btn-expandir" class="btn no-print">
+    ⤢ Abrir em tela cheia
+</button>
+ <h5 class="informativo no-print">Os requerimentos devem ser encaminhados à CGPP com <b>antecedência mínima de 60 dias</b>, considerando o mês de início pretendido para o afastamento.</h5>
+<main class="container">
+    <section class="card" id="calculadora">
+        <div class="consulta">
+
+            <!-- Entrada de dados -->
+            <div class="entrada no-print">
+                <div class="campo">
+                    <label for="nome-servidor">Nome do(a) servidor(a)</label>
+                    <input type="text" id="nome-servidor" placeholder="Ex.: João Silva" maxlength="80">
+                </div>
+
+                <div class="campo">
+                    <label for="data-inicio">Data de início da fruição</label>
+                    <input type="date" id="data-inicio" min="1900-01-01" max="2100-12-31" autofocus>
+                </div>
+
+                <div class="campo">
+                    <span class="rotulo" id="rotulo-tempo">Tempo solicitado (Máx. 90 dias)</span>
+                    <div class="tempo-box" role="group" aria-labelledby="rotulo-tempo">
+                        <div class="tempo-linha">
+                            <div class="tempo-item">
+                                <span class="tempo-rotulo">Mês(es)</span>
+                                <div class="stepper">
+                                    <button type="button" class="btn-passo" data-alvo="qtd-meses" data-delta="-1" aria-label="Diminuir um mês">−</button>
+                                    <input type="number" id="qtd-meses" min="0" max="3" value="1" aria-label="Meses">
+                                    <button type="button" class="btn-passo" data-alvo="qtd-meses" data-delta="1" aria-label="Aumentar um mês">+</button>
+                                </div>
+                            </div>
+                            <div class="tempo-item">
+                                <span class="tempo-rotulo">Dia(s)</span>
+                                <div class="stepper">
+                                    <button type="button" class="btn-passo" data-alvo="qtd-dias" data-delta="-1" aria-label="Diminuir um dia">−</button>
+                                    <input type="number" id="qtd-dias" min="0" max="90" value="0" aria-label="Dias">
+                                    <button type="button" class="btn-passo" data-alvo="qtd-dias" data-delta="1" aria-label="Aumentar um dia">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="badges">
+                            <span class="badge" id="badge-total">30 dias totais</span>
+                            <span class="badge" id="badge-termino">Término: --/--/----</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!--VALIDAÇÃO DO QUINQUÊNIO -->
+                <div class="campo divisor-opcional">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="chk-quinquenio">
+                        Validar limite do quinquênio (Opcional)
+                    </label>
+                </div>
+
+                <div class="campo animate-box" id="box-quinquenio" hidden>
+                    <label for="data-quinquenio">Data Término do período aquisitivo (Quinquênio)</label>
+                    <input type="date" id="data-quinquenio" min="1900-01-01" max="2100-12-31">
+                    <span class="dica">O sistema fechará os 5 anos aquisitivos e simular sua validade.</span>
+                </div>
+
+                <button type="button" class="btn btn-secundario" id="btn-refazer" style="margin-top: 10px;">Refazer</button>
+            </div>
+            <!-- RESULTADO -->
+            <div class="saida">
+                <p class="so-impressao" id="impressao-cabecalho"></p>
+
+                <div class="resultado neutro" id="resultado" aria-live="polite">
+                    <p class="res-rotulo">A Data limite para solicitação do processo é:</p>
+                    <p class="res-destaque" id="res-limite">--/--/----</p>
+                    <p class="pill" id="res-status" hidden></p>
+                    <p class="res-vazio" id="res-vazio">Informe a data de início da fruição para ver o prazo.</p>
+                    <dl class="res-linhas" id="res-detalhes" hidden>
+                        <dt>Período solicitado</dt>
+                        <dd id="res-total"></dd>
+                        <dt>Data de Início</dt>
+                        <dd id="res-inicio"></dd>
+                        <dt>Data do término</dt>
+                        <dd id="res-termino"></dd>
+                        <dt>Retorno estimado</dt>
+                        <dd class="item-icone">
+                            <span id="res-retorno"></span>
+                            <span class="icone-info" data-title="Data do retorno ao trabalho: A data exata de apresentação está sujeita a alterações conforme regras setoriais ou feriados locais.">!</span>
+                        </dd>
+                    </dl>
+
+                    <!--QUINQUÊNIO -->
+                    <div id="bloco-quinquenio-resultado" hidden style="margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--cor-borda);">
+                        <p class="res-rotulo" style="margin-bottom: 12px; font-weight: 600; color: var(--tinta);">Análise do Quinquênio</p>
+                        <dl class="res-linhas">
+                            <dt>Período Aquisitivo</dt>
+                            <dd id="res-q-periodo"></dd>
+                          <dt>Situação Legal</dt>
+                            <dd style="display: flex; align-items: center; gap: 6px;">
+                                <span id="res-q-situacao"></span>
+                               <span id="icone-regra-especial" class="icone-info"
+                               data-title="Conforme Parecer PGE nº PA-NPE-006/2021,em razão dos Decretos 19.529/2020, 19.586/2020 e 20.058/2020: Para esse período aquisitivo o prazo foi prorrogado até 14/10/2022 ou 5 anos após a aquisição, aplicando-se a regra mais benéfica ao servidor" hidden>!</span>
+                            </dd>
+
+                            <dt id="lbl-q-disponivel" hidden>Disponível a partir de</dt>
+                            <dd id="res-q-disponivel" hidden></dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <div class="botoes-resultado no-print">
+                    <button type="button" class="btn btn-secundario" id="btn-copiar" disabled>Copiar resultado</button>
+                    <button type="button" class="btn btn-primario" id="btn-baixar" disabled title="Na janela de impressão, escolha &quot;Salvar como PDF&quot;">Baixar resultado</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+<div id="aviso" class="aviso no-print" role="status"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
