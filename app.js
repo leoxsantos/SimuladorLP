@@ -1,7 +1,3 @@
-/* Calculadora de Fruição LP
-   Descrição: No sistema você informa a data de início para a LP. O sistema calcula sozinho:
-   total de dias, término da fruição e prazo para abertura do processom tendo como opcionao uma consulta sobre a validade do quinquênio também*/
-
 const MS_DIA = 24 * 60 * 60 * 1000;
 const MESES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
                'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
