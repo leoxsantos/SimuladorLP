@@ -163,17 +163,14 @@ function atualizar() {
     let textoPeriodo = '', textoSituacao = '', textoDisponivel = '';
 
    if (isQuinquenioValido) {
-        // A data digitada é o marco inicial do ciclo seguinte (ex: 01/05/2020)
-        const dataDigitada = isoParaData(dataQuinquenioIso);
-        
-        //  O término real do quinquênio é o dia ANTERIOR à data digitada (ex: 30/04/2020)
+        const dataDigitada = isoParaData(dataQuinquenioIso);        
+        //  O término real do quinquênio é o dia ANTERIOR à data digitada 
         const fimQ = new Date(dataDigitada.getTime());
-        fimQ.setUTCDate(fimQ.getUTCDate() - 1);
-        
+        fimQ.setUTCDate(fimQ.getUTCDate() - 1);        
         // O início do quinquênio: retrocede 5 anos a partir do término real
         const inicioQ = new Date(fimQ.getTime());
         inicioQ.setUTCFullYear(inicioQ.getUTCFullYear() - 5);
-        // Avança 1 dia para fechar o ciclo exato (ex: 01/05/2015)
+        // Avança 1 dia para fechar o ciclo exato
         inicioQ.setUTCDate(inicioQ.getUTCDate() + 1);
 
         const limiteLei = new Date(Date.UTC(2015, 11, 30)); 
@@ -194,33 +191,30 @@ function atualizar() {
             porId('lbl-q-disponivel').hidden = false;
             porId('res-q-disponivel').hidden = false;
         } 
-        else if (isRegraEspecial) {
-            textoSituacao = '🔴 Prescrito desde 14/10/2022';
-            porId('lbl-q-disponivel').hidden = true;
-            porId('res-q-disponivel').hidden = true;
-            porId('icone-regra-especial').hidden = false;
-        }
-        else if (fimQ.getTime() <= limiteLei.getTime()) {
-            textoSituacao = '🟢 Direito Adquirido (Sem expiração)';
-            porId('lbl-q-disponivel').hidden = true;
-            porId('res-q-disponivel').hidden = true;
-        } 
-        else {
-            // Expiração legal
-            const expQ = new Date(Date.UTC(dataDigitada.getUTCFullYear() + 5, dataDigitada.getUTCMonth(), dataDigitada.getUTCDate()));
-            
-            if (hojeUTC.getTime() > expQ.getTime()) {
-                textoSituacao = `🔴 Prescrito desde ${formatarDataBR(expQ)}`;
-            } else {
-                if (terminoDataObj && terminoDataObj.getTime() > expQ.getTime()) {
-                    textoSituacao = `🟡 Válido até ${formatarDataBR(expQ)} (Atenção: A fruição solicitada ultrapassa esta data!)`;
-                } else {
-                    textoSituacao = `🟢 Válido até ${formatarDataBR(expQ)}`;
-                }
-            }
-            porId('lbl-q-disponivel').hidden = true;
-            porId('res-q-disponivel').hidden = true;
-        }
+        else if (fimQ.getTime() < new Date(Date.UTC(2015, 11, 30)).getTime()) { // adquirido antes da Lei 13.471 (sem expiração)
+    textoSituacao = '🟢 Direito Adquirido (Sem expiração)';
+    porId('lbl-q-disponivel').hidden = true;
+    porId('res-q-disponivel').hidden = true;
+}
+else {
+    const expNormal = new Date(Date.UTC(dataDigitada.getUTCFullYear() + 5, dataDigitada.getUTCMonth(), dataDigitada.getUTCDate()));
+    const dataPGE   = new Date(Date.UTC(2022, 9, 14));  // 14/10/2022
+    const inicioPGE = new Date(Date.UTC(2021, 0, 1));   // 01/01/2021
+    const usaPGE = expNormal.getTime() >= inicioPGE.getTime() && expNormal.getTime() <= dataPGE.getTime();
+    const expQ = usaPGE ? dataPGE : expNormal;
+
+    if (usaPGE) porId('icone-regra-especial').hidden = false;
+
+    if (hojeUTC.getTime() > expQ.getTime()) {
+        textoSituacao = `🔴 Prescrito desde ${formatarDataBR(expQ)}`;
+    } else if (terminoDataObj && terminoDataObj.getTime() > expQ.getTime()) {
+        textoSituacao = `🟡 Válido até ${formatarDataBR(expQ)} (Atenção: A fruição solicitada ultrapassa esta data!)`;
+    } else {
+        textoSituacao = `🟢 Válido até ${formatarDataBR(expQ)}`;
+    }
+    porId('lbl-q-disponivel').hidden = true;
+    porId('res-q-disponivel').hidden = true;
+}
 
         porId('res-q-periodo').textContent = textoPeriodo;
         porId('res-q-situacao').textContent = textoSituacao;
@@ -230,7 +224,7 @@ function atualizar() {
         porId('icone-regra-especial').hidden = true;
     }
 
-  // --- 4. HABILITAÇÃO DOS BOTÕES E MONTAGEM DA CÓPIA ---
+  // HABILITAÇÃO DOS BOTÕES E MONTAGEM DA CÓPIA ---
     const temAlgoValido = isFruicaoValida || isQuinquenioValido;
     
     // Habilita os botões sempre que houver qualquer dado válido na tela, sem restrições
@@ -327,7 +321,7 @@ async function copiarTexto(texto) {
     try {
         await navigator.clipboard.writeText(texto);
     } catch (erro) {
-        // Plano B para navegadores que bloqueiam a área de transferência
+        // caso  navegador impeça a área de transferência
         const area = document.createElement('textarea');
         area.value = texto;
         document.body.appendChild(area);
